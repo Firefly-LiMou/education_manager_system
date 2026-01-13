@@ -1,0 +1,110 @@
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", 微软雅黑, sans-serif;
+}
+
+/* 页面背景 */
+body {
+    background-color: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 登录容器：居中、白色背景、阴影 */
+.login-container {
+    width: 450px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+}
+
+/* 登录标题 */
+.login-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-title h2 {
+    color: #2c3e50;
+    font-size: 24px;
+}
+
+/* 错误提示框 */
+.error-box {
+    background-color: #fef0f0;
+    border: 1px solid #feb2b2;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.error-box span {
+    color: #dc2626;
+    font-size: 14px;
+}
+
+.error-box i {
+    margin-right: 5px;
+}
+
+/* 表单项样式 */
+.form-item {
+    margin-bottom: 20px;
+}
+
+.form-item label {
+    display: inline-block;
+    width: 80px;
+    color: #34495e;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.form-item input, .form-item select {
+    width: calc(100% - 90px);
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #dcdfe6;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #606266;
+    outline: none;
+}
+
+.form-item input:focus, .form-item select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.form-item input::placeholder {
+    color: #909399;
+}
+
+/* 登录按钮 */
+.form-btn {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    width: 100%;
+    height: 45px;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #2980b9;
+}

@@ -1,0 +1,56 @@
+教务管理系统/                  // 项目根目录（Eclipse/IDEA的Dynamic Web Project）
+├── WebContent/                // Web核心目录（对应Tomcat的webapp）
+│   ├── WEB-INF/               // 受保护目录（外部无法直接访问）
+│   │   ├── classes/           // 编译后的class文件（Java代码编译输出）
+│   │   ├── lib/               // 第三方jar包（手动放入，非Maven依赖）
+│   │   │   ├── mysql-connector-java-8.0.30.jar  // MySQL驱动
+│   │   │   ├── jstl-1.2.jar                     // JSTL标签库
+│   │   │   └── standard.jar                     // JSTL依赖
+│   │   └── web.xml            // Web核心配置文件（Servlet/Filter/监听器配置）
+│   ├── pages/                 // JSP页面目录（按模块拆分）
+│   │   ├── common/            // 公共页面（页眉/页脚/错误页）
+│   │   │   ├── header.jsp
+│   │   │   ├── footer.jsp
+│   │   │   └── error.jsp
+│   │   ├── login/             // 登录模块页面
+│   │   │   └── login.jsp
+│   │   ├── student/           // 学生模块页面
+│   │   │   ├── student_list.jsp
+│   │   │   └── student_info.jsp
+│   │   ├── teacher/           // 教师模块页面
+│   │   ├── course/            // 课程模块页面
+│   │   └── admin/             // 管理员模块页面
+│   ├── static/                // 静态资源（解耦页面与资源）
+│   │   ├── css/               // 样式文件
+│   │   ├── js/                // 脚本文件
+│   │   └── images/            // 图片资源
+│   └── index.jsp              // 项目首页（跳转登录页）
+├── src/                       // Java源代码目录（核心业务逻辑）
+│   ├── com/                   // 包名规范（避免命名冲突）
+│   │   ├── entity/            // 实体类（JavaBean，对应数据库表）
+│   │   │   ├── Student.java
+│   │   │   ├── Teacher.java
+│   │   │   ├── Course.java
+│   │   │   ├── Score.java
+│   │   │   └── User.java      // 通用用户（管理员/教师/学生）
+│   │   ├── util/              // 工具类（通用功能，复用性高）
+│   │   │   ├── DBUtil.java    // 数据库连接/关闭工具
+│   │   │   └── StringUtil.java// 字符串工具（非必需，简化判断）
+│   │   ├── filter/            // 过滤器
+│   │   │   ├── EncodingFilter.java  // 统一字符编码（解决中文乱码）
+│   │   │   └── LoginFilter.java    // 登录验证（未登录禁止访问核心页面）
+│   │   ├── servlet/           // Servlet（按模块拆分，处理请求）
+│   │   │   ├── LoginServlet.java
+│   │   │   ├── student/
+│   │   │   │   ├── StudentListServlet.java
+│   │   │   │   └── StudentAddServlet.java
+│   │   │   ├── teacher/
+│   │   │   ├── course/
+│   │   │   └── admin/
+│   │   └── dao/               // 数据访问层（操作数据库，与表对应）
+│   │       ├── StudentDao.java
+│   │       ├── TeacherDao.java
+│   │       ├── CourseDao.java
+│   │       └── UserDao.java
+└── sql/                       // 数据库脚本（课程设计配套，方便部署）
+    └── edu_manage.sql         // 建表语句+测试数据
