@@ -1,135 +1,129 @@
 package entity;
+import java.io.Serializable;
 
 /**
- * 学生实体类（对应数据库student表）
- * 遵循JavaBean规范：
- * 1. 私有成员变量
- * 2. 无参构造方法（必须，反射/ORM框架需要）
- * 3. 全参构造方法（方便快速创建对象）
- * 4. getter/setter方法（JSP EL表达式/Servlet取值需要）
- * 5. toString方法（方便调试打印对象信息）
+ * 学生实体类（JavaBean）
+ * 对应数据库中的Student表，完整映射表字段及约束
+ * 遵循JavaBean规范：私有属性、无参构造、全参构造、getter/setter、toString、序列化
  */
-public class Student extends User{
-    // 1. 私有成员变量（与数据库student表字段一一对应）
-    // 学号（主键，唯一标识）
-    private String stuId;
-    // 学生姓名
-    private String stuName;
-    // 性别（男/女）
-    private String gender;
-    // 年龄
-    private Integer age;
-    // 班级名称（如：计算机2023-1班）
-    private String className;
-    // 联系电话
-    private String phone;
-    // 邮箱（可选，扩展字段）
-    private String email;
-    // 专业（如：计算机科学与技术）
-    private String major;
+public class Student implements Serializable {
+    // 序列化版本号，保证序列化/反序列化一致性
+    private static final long serialVersionUID = 1L;
 
-    // 2. 无参构造方法（必须！JSP/反射创建对象时默认调用）
+    /**
+     * 学生编号（主键）
+     * 数据库字段：Sno VARCHAR(10) NOT NULL
+     */
+    private String sno;
+
+    /**
+     * 学生姓名
+     * 数据库字段：Sname VARCHAR(20) NOT NULL
+     */
+    private String sname;
+
+    /**
+     * 学生性别
+     * 数据库字段：Ssex VARCHAR(2) NOT NULL
+     * 约束：仅能为"男"或"女"
+     */
+    private String ssex;
+
+    /**
+     * 年级
+     * 数据库字段：Sgrade VARCHAR(10)
+     */
+    private String sgrade;
+
+    /**
+     * 专业
+     * 数据库字段：Smajor VARCHAR(30)
+     */
+    private String smajor;
+
+    /**
+     * 无参构造方法（JavaBean必需）
+     * 用于反射实例化（如MyBatis、Spring等框架）
+     */
     public Student() {
     }
 
-    // 3. 全参构造方法（方便一次性赋值创建对象）
-    public Student(String stuId, String stuName, String gender, Integer age,
-                   String className, String phone, String email, String major) {
-        this.stuId = stuId;
-        this.stuName = stuName;
-        this.gender = gender;
-        this.age = age;
-        this.className = className;
-        this.phone = phone;
-        this.email = email;
-        this.major = major;
+    /**
+     * 全参构造方法
+     * 用于快速创建完整的学生对象
+     * @param sno 学生编号
+     * @param sname 学生姓名
+     * @param ssex 学生性别
+     * @param sgrade 年级
+     * @param smajor 专业
+     */
+    public Student(String sno, String sname, String ssex, String sgrade, String smajor) {
+        this.sno = sno;
+        this.sname = sname;
+        this.ssex = ssex;
+        this.sgrade = sgrade;
+        this.smajor = smajor;
     }
 
-    // 4. 简化构造方法（可选，适配常用字段场景，减少参数数量）
-    public Student(String stuId, String stuName, String gender, String className) {
-        this.stuId = stuId;
-        this.stuName = stuName;
-        this.gender = gender;
-        this.className = className;
+    // Getter & Setter方法（每个属性对应，保证封装性）
+    public String getSno() {
+        return sno;
     }
 
-    // 5. getter/setter方法（核心！外部类/Servlet/JSP获取/修改属性值）
-    public String getStuId() {
-        return stuId;
+    public void setSno(String sno) {
+        this.sno = sno;
     }
 
-    public void setStuId(String stuId) {
-        this.stuId = stuId;
+    public String getSname() {
+        return sname;
     }
 
-    public String getStuName() {
-        return stuName;
+    public void setSname(String sname) {
+        this.sname = sname;
     }
 
-    public void setStuName(String stuName) {
-        this.stuName = stuName;
+    public String getSsex() {
+        return ssex;
     }
 
-    public String getGender() {
-        return gender;
+    public void setSsex(String ssex) {
+        // 可选：在setter中增加性别约束校验（贴合数据库约束）
+        if ("男".equals(ssex) || "女".equals(ssex)) {
+            this.ssex = ssex;
+        } else {
+            throw new IllegalArgumentException("性别仅能为'男'或'女'");
+        }
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public String getSgrade() {
+        return sgrade;
     }
 
-    public Integer getAge() {
-        return age;
+    public void setSgrade(String sgrade) {
+        this.sgrade = sgrade;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public String getSmajor() {
+        return smajor;
     }
 
-    public String getClassName() {
-        return className;
+    public void setSmajor(String smajor) {
+        this.smajor = smajor;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    // 6. toString方法（可选但推荐，调试时打印对象信息更直观）
+    /**
+     * 重写toString方法
+     * 方便打印对象信息，便于调试和日志输出
+     * @return 学生对象的字符串表示
+     */
     @Override
     public String toString() {
         return "Student{" +
-                "stuId='" + stuId + '\'' +
-                ", stuName='" + stuName + '\'' +
-                ", gender='" + gender + '\'' +
-                ", age=" + age +
-                ", className='" + className + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", major='" + major + '\'' +
+                "sno='" + sno + '\'' +
+                ", sname='" + sname + '\'' +
+                ", ssex='" + ssex + '\'' +
+                ", sgrade='" + sgrade + '\'' +
+                ", smajor='" + smajor + '\'' +
                 '}';
     }
 }
