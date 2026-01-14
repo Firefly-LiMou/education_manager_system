@@ -60,9 +60,11 @@
             </select>
         </div>
 
-        <!-- 登录按钮 -->
-        <div class="form-btn">
+        <div class="form-btn-group">
+            <!-- 登录按钮 -->
             <button type="submit" class="submit-btn">登录</button>
+            <!-- 注册按钮，链接到注册页面 -->
+            <a href="${pageContext.request.contextPath}/pages/login/register.jsp" class="submit-btn">注册</a>
         </div>
     </form>
 </div>

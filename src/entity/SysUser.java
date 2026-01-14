@@ -16,7 +16,7 @@ public class SysUser implements Serializable {
      * 系统用户ID（主键）
      * 数据库字段：UserID VARCHAR(12) NOT NULL（如U001001）
      */
-    private String userId;
+    private Integer userId;
 
     /**
      * 登录账户（唯一）
@@ -67,7 +67,6 @@ public class SysUser implements Serializable {
     /**
      * 全参构造方法
      * 用于快速创建完整的系统用户对象
-     * @param userId 系统用户ID
      * @param account 登录账户
      * @param password 加密密码
      * @param role 角色
@@ -75,9 +74,8 @@ public class SysUser implements Serializable {
      * @param createTime 创建时间
      * @param status 状态（0/1）
      */
-    public SysUser(String userId, String account, String password, String role,
+    public SysUser(String account, String password, String role,
                    String relId, Date createTime, Integer status) {
-        this.userId = userId;
         setAccount(account);
         setPassword(password);
         setRole(role);
@@ -86,12 +84,19 @@ public class SysUser implements Serializable {
         setStatus(status);
     }
 
+    public SysUser(String account, String password, String role) {
+        setAccount(account);
+        setPassword(password);
+        setRole(role);
+        status = 1;
+    }
+
     // Getter & Setter方法（保证属性封装性，适配数据库约束）
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -174,13 +179,15 @@ public class SysUser implements Serializable {
      */
     @Override
     public String toString() {
+        // 临时变量存储状态，不修改原对象属性
+        Integer currentStatus = (this.status == null) ? 0 : this.status;
         return "SysUser{" +
-                "userId='" + userId + '\'' +
-                ", account='" + account + '\'' +
-                ", role='" + role + '\'' +
-                ", relId='" + relId + '\'' +
-                ", createTime=" + createTime +
-                ", status=" + (status == 1 ? "启用" : "禁用") +
+                "userId='" + (userId == null ? "" : userId) + '\'' +
+                ", account='" + (account == null ? "" : account) + '\'' +
+                ", role='" + (role == null ? "" : role) + '\'' +
+                ", relId='" + (relId == null ? "" : relId) + '\'' +
+                ", createTime=" + (createTime == null ? "" : createTime) +
+                ", status=" + (currentStatus == 1 ? "启用" : "禁用") +
                 '}';
     }
 

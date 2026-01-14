@@ -8,7 +8,7 @@ USE education_manage_system;
 
 -- 1. 系统用户表（核心）
 CREATE TABLE IF NOT EXISTS SysUser (
-   UserID VARCHAR(12) NOT NULL COMMENT '系统用户ID（主键，如U001001）',
+   UserID BIGINT AUTO_INCREMENT NOT NULL COMMENT '系统用户ID（主键，如U001001）',
    Account VARCHAR(20) NOT NULL COMMENT '登录账户（唯一）',
    Password VARCHAR(64) NOT NULL COMMENT '登录密码（SHA256加密）',
    Role VARCHAR(10) NOT NULL COMMENT '角色（student/teacher/admin）',

@@ -21,7 +21,7 @@ public class DBUtil {
     /**
      * 数据库连接URL
      */
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/education_manage_system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/education_manage_system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true";
 
     /**
      * 数据库用户名（根据自己的MySQL配置修改）

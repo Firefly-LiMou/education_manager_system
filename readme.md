@@ -52,9 +52,5 @@
 │   │       ├── TeacherDao.java
 │   │       ├── CourseDao.java
 │   │       └── UserDao.java
+
 └── sql/                       // 数据库脚本（课程设计配套，方便部署）
-    └── edu_manage.sql         // 建表语句+测试数据
-
-
-数据库配置：
-create 

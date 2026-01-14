@@ -1,7 +1,6 @@
 package dao;
 
 import entity.SysUser;
-import util.CryptoUtil;
 import util.DBUtil;
 
 import java.sql.Connection;
@@ -22,9 +21,7 @@ public class SysUserDao {
      * 用户注册（核心：加密原始密码）
      */
     public boolean register(SysUser sysUser, String rawPassword) {
-        String encryptedPassword = CryptoUtil.encryptPassword(rawPassword);
-        sysUser.setPassword(encryptedPassword);
-
+        sysUser.setPassword(rawPassword);
         return this.addSysUser(sysUser);
     }
 
@@ -37,8 +34,7 @@ public class SysUserDao {
             return null; // 账户不存在
         }
 
-        boolean passwordMatch = CryptoUtil.verifyPassword(rawPassword, sysUser.getPassword());
-        return passwordMatch ? sysUser : null;
+        return rawPassword.equals(sysUser.getPassword()) ? sysUser : null;
     }
 
 
@@ -55,10 +51,10 @@ public class SysUserDao {
             conn = DBUtil.getConnection();
             String sql = "INSERT INTO SysUser (UserID, Account, Password, Role, RelID, CreateTime, Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, sysUser.getUserId());
+            pstmt.setInt(1, sysUser.getUserId());
             pstmt.setString(2, sysUser.getAccount());
-            pstmt.setString(3, sysUser.getPassword()); // 注意：密码需先加密（如SHA256）再传入
-            pstmt.setString(4, sysUser.getRole());
+            pstmt.setString(3, sysUser.getPassword());
+            pstmt.setString(4, sysUser.getRole() != null ? sysUser.getRole() : "");
             pstmt.setString(5, sysUser.getRelId());
             // 若创建时间为空，设为当前时间
             pstmt.setDate(6, sysUser.getCreateTime() != null ? new java.sql.Date(sysUser.getCreateTime().getTime()) : new java.sql.Date(new Date().getTime()));
@@ -116,7 +112,7 @@ public class SysUserDao {
             pstmt.setString(2, sysUser.getRole());
             pstmt.setString(3, sysUser.getRelId());
             pstmt.setInt(4, sysUser.getStatus() != null ? sysUser.getStatus() : 1);
-            pstmt.setString(5, sysUser.getUserId());
+            pstmt.setString(5, sysUser.getAccount());
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
@@ -238,7 +234,7 @@ public class SysUserDao {
      */
     private SysUser wrapSysUserFromResultSet(ResultSet rs) throws SQLException {
         SysUser sysUser = new SysUser();
-        sysUser.setUserId(rs.getString("UserID"));
+        sysUser.setUserId(rs.getInt("UserID"));
         sysUser.setAccount(rs.getString("Account"));
         sysUser.setPassword(rs.getString("Password")); // 注意：返回的是加密后的密码
         sysUser.setRole(rs.getString("Role"));
